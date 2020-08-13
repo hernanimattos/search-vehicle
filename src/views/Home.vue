@@ -2,6 +2,7 @@
 	<div class="home">
 		<Header />
 		<Form />
+		<SeachResult />
 		<Footer />
 	</div>
 </template>
@@ -12,6 +13,7 @@ const { mapActions } = createNamespacedHelpers('vehicle');
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Form from '../components/Form/Form';
+import SeachResult from '../components/SearchResult/SeachResult';
 
 export default {
 	name: 'Home',
@@ -24,7 +26,8 @@ export default {
 	components: {
 		Header,
 		Footer,
-		Form
+		Form,
+		SeachResult
 	}
 };
 </script>
