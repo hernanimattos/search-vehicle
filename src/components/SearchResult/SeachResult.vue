@@ -1,19 +1,27 @@
 <template>
   <section class="search-result">
-    <CardVehicle />
-    <CardVehicle />
-    <CardVehicle />
-    <CardVehicle />
+    <CardVehicle v-for="v in vehicles" :key="v.ID" />
   </section>
 </template>
 
 <script>
-import CardVehicle from "../../ui-components/CardVehicle/CardVehicle";
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapState } = createNamespacedHelpers('car');
+import CardVehicle from '../../ui-components/CardVehicle/CardVehicle';
 export default {
-  name: "SearchResult",
+  name: 'SearchResult',
+  computed: {
+    ...mapState(['vehicles']),
+  },
+  methods: {
+    ...mapActions(['getVehicles']),
+  },
+  mounted() {
+    this.getVehicles();
+  },
   components: {
-    CardVehicle
-  }
+    CardVehicle,
+  },
 };
 </script>
 <style>

@@ -21,7 +21,7 @@
             <div class="form-field">
               <input type="text" v-model="location" class="pd-l-70" />
               <div class="container-input_placeholder">
-                <fa-icon icon="map-marker-alt" class="icon-left" />
+                <UIIcon icon="map-marker-alt" orientation="left" />
                 <span class="input_placeholder_text"> Onde:</span>
               </div>
             </div>
@@ -35,26 +35,23 @@
             </div>
           </div>
           <div class="form-group column">
-            <div class="form-field mg-r1">
-              <select class="pd-l-40">
-                <option value="">marca</option>
-                <option value="">aqui</option>
-                <option value="">aqui</option>
-              </select>
-              <div class="container-input_placeholder">
-                <span class="input_placeholder_text">Marca:</span>
-              </div>
-            </div>
-            <div class="form-field mg-l1">
-              <select class="pd-l-48">
-                <option value="">aqui</option>
-                <option value="">aqui</option>
-                <option value="">aqui</option>
-              </select>
-              <div class="container-input_placeholder">
-                <span class="input_placeholder_text">Modelo:</span>
-              </div>
-            </div>
+            <UISelect
+              :data-to-list="brands"
+              class-styles="pd-l-48"
+              class-field="mg-r1"
+              default-value="all"
+              text-name="Modelo:"
+              @change="getModelsByBranchId"
+            />
+
+            <UISelect
+              :data-to-list="models"
+              class-styles="pd-l-48 "
+              class-field="mg-l1"
+              default-value="all"
+              text-name="Modelo:"
+              @change="getVersionByModelId"
+            />
           </div>
         </div>
         <div class="form-group columns column-two">
@@ -75,25 +72,20 @@
             </div>
           </div>
           <div class="form-group column">
-            <div class="form-field">
-              <select class="pd-l-48">
-                <option value="">vesao</option>
-                <option value="">aqui</option>
-                <option value="">aqui</option>
-              </select>
-              <div class="container-input_placeholder">
-                <span class="input_placeholder_text">Versão:</span>
-              </div>
-            </div>
+            <UISelect
+              :data-to-list="versionModels"
+              class-styles="pd-l-48"
+              text-name="Versão:"
+              default-value="all"
+            />
           </div>
         </div>
         <div class="form-group columns column-tree">
           <div class="form-group column">
             <div class="form-field wrapper-advanced-search">
-              <a
-                ><fa-icon icon="chevron-right" class="icon-left" />Busca
-                avançada</a
-              >
+              <router-link to="/">
+                <UIIcon icon="chevron-right" orientation="left" />Busca avançada
+              </router-link>
             </div>
           </div>
           <div class="form-group column wrapper-reset_filter">
@@ -108,11 +100,19 @@
   </section>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapState } = createNamespacedHelpers('car');
+import UIIcon from '@/ui-components/UIIcon/UIIcon';
+
+import UISelect from '@/ui-components/UISelect/UISelect';
 export default {
   name: 'Form',
   data() {
     return {
       location: 'São Paulo - SP',
+      carBrand: 'all',
+      model: 'all',
+      versionModel: 'all',
       ray: [
         {
           value: 100,
@@ -129,36 +129,32 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(['brands', 'models', 'versionModels']),
+  },
+  methods: {
+    ...mapActions(['getBrands', 'getModels', 'getVersionModels']),
+    getModelsByBranchId(event) {
+      const {
+        target: { value },
+      } = event;
+      this.getModels(value);
+    },
+    getVersionByModelId(id) {
+      this.getVersionModels(id);
+    },
+  },
+  mounted() {
+    this.getBrands();
+  },
+  components: {
+    UIIcon,
+    UISelect,
+  },
 };
 </script>
 
 <style>
-input[type='text'],
-select {
-  width: 100%;
-  height: 100%;
-  padding: 5px 10px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  border-radius: 2px;
-}
-
-input[type='submit'] {
-  width: 100%;
-  background-color: red;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-input[type='submit']:hover {
-  background-color: #ea5254;
-}
-
 .form-wrapper {
   padding: 1rem;
   background-color: #fff;
@@ -201,7 +197,7 @@ input[type='submit']:hover {
   margin: 0.3rem;
 }
 
-@media (max-width: 462px) {
+@media (max-width: 768px) {
   .columns {
     display: initial;
   }
@@ -256,14 +252,6 @@ input[type='text'].pd-l-70 {
   display: flex;
   position: absolute;
   top: 0;
-}
-
-.icon-left {
-  margin-left: 0.4rem;
-  margin-top: 0.3rem;
-  margin-right: 0.3rem;
-  color: red;
-  width: 0.6rem;
 }
 
 .input_placeholder_text {

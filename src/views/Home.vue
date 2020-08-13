@@ -1,10 +1,10 @@
 <template>
-	<div class="home">
-		<Header />
-		<Form />
-		<SeachResult />
-		<Footer />
-	</div>
+  <div class="home">
+    <Header />
+    <Form />
+    <SeachResult />
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -16,18 +16,23 @@ import Form from '../components/Form/Form';
 import SeachResult from '../components/SearchResult/SeachResult';
 
 export default {
-	name: 'Home',
-	methods: {
-		...mapActions(['getVehicles'])
-	},
-	mounted() {
-		// this.getVehicles();
-	},
-	components: {
-		Header,
-		Footer,
-		Form,
-		SeachResult
-	}
+  name: 'Home',
+  methods: {
+    ...mapActions(['getVehicles']),
+  },
+  mounted() {
+    // this.getVehicles();
+  },
+  components: {
+    Header,
+    Footer,
+    Form,
+    SeachResult,
+  },
 };
 </script>
+<style>
+.home {
+  width: 100%;
+}
+</style>

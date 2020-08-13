@@ -1,5 +1,6 @@
-import axios from "axios";
-import config from "./config";
+import axios from 'axios';
+import qs from 'qs';
+import config from './config';
 
 class Provider {
   constructor() {
@@ -9,11 +10,17 @@ class Provider {
   }
   configAxios() {
     this.axios = axios.create({
-      ...this.config
+      ...this.config,
     });
   }
-  async get(url) {
-    return await this.axios.get(url);
+  async get(url, params) {
+    const urlReq = !params ? url : this.urlBuild(url, params);
+
+    return await this.axios.get(urlReq);
+  }
+
+  urlBuild(url, params) {
+    return `${url}?${qs.stringify(params)}`;
   }
 }
 
