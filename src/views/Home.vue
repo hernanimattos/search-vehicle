@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
-    <Header />
-    <Form />
-    <SeachResult />
-    <Footer />
-  </div>
+	<div class="home">
+		<Header />
+		<Form />
+		<SeachResult />
+		<Footer />
+	</div>
 </template>
 
 <script>
@@ -15,11 +15,6 @@ import SeachResult from '../components/SearchResult/SeachResult';
 
 export default {
   name: 'Home',
-  methods: {
-    teste() {
-      console.log('deu ceert');
-    },
-  },
   components: {
     Header,
     Footer,
@@ -30,6 +25,6 @@ export default {
 </script>
 <style>
 .home {
-  width: 100%;
+	width: 100%;
 }
 </style>
