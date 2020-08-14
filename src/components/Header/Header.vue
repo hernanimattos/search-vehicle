@@ -56,12 +56,12 @@ export default {
 .menu {
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 .header-tabs_container {
 	display: flex;
 	justify-content: space-between;
-	width: 150px;
 }
 .header-tabs_container a {
 	display: flex;
