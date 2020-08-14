@@ -7,6 +7,7 @@ export default {
       models: [],
       versionModels: [],
       vehicles: [],
+      page: 1,
     },
     mutations: {
       setBrands(state, payload) {
@@ -21,13 +22,20 @@ export default {
       setVehicles(state, payload) {
         state.vehicles = payload;
       },
+      nextPage(state, payload) {
+        state.page = payload;
+      },
+      prevPage(state, payload) {
+        state.page = payload;
+      },
     },
     actions: {
       // eslint-disable-next-line
-      async getVehicles({ commit }, _) {
-        const { data } = await Provider.get('/Vehicles', { Page: 1 });
+      async getVehicles({ commit }, Page = 1) {
+        const { data } = await Provider.get('/Vehicles', { Page });
 
         commit('setVehicles', data);
+        return Promise.resolve(data);
       },
       // eslint-disable-next-line
       async getBrands({ commit }, _) {
@@ -35,7 +43,7 @@ export default {
           const { data } = await Provider.get('/Make');
 
           commit('setBrands', data);
-          return data;
+          return Promise.resolve({ ...data });
         } catch (e) {
           return Promise.reject(e);
         }

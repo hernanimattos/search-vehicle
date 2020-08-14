@@ -102,8 +102,8 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 const { mapActions, mapState } = createNamespacedHelpers('car');
-import UIIcon from '@/ui-components/UIIcon/UIIcon';
 
+import UIIcon from '@/ui-components/UIIcon/UIIcon';
 import UISelect from '@/ui-components/UISelect/UISelect';
 export default {
   name: 'Form',
@@ -134,11 +134,8 @@ export default {
   },
   methods: {
     ...mapActions(['getBrands', 'getModels', 'getVersionModels']),
-    getModelsByBranchId(event) {
-      const {
-        target: { value },
-      } = event;
-      this.getModels(value);
+    getModelsByBranchId(id) {
+      this.getModels(id);
     },
     getVersionByModelId(id) {
       this.getVersionModels(id);
@@ -298,47 +295,5 @@ input[type='text'].pd-l-70 {
 
 .form-field .check-box label {
   margin-right: 0.5rem;
-}
-
-.check-box label {
-  position: relative;
-  cursor: pointer;
-}
-
-input[type='checkbox'] {
-  padding: 0;
-  height: initial;
-  width: initial;
-  margin-bottom: 0;
-  display: none;
-  cursor: pointer;
-}
-
-input[type='checkbox']:checked + label:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 5px;
-  width: 5px;
-  height: 9px;
-  border: solid #bf002c;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-.check-box label:before {
-  content: '';
-  -webkit-appearance: none;
-  background-color: transparent;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
-    inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-  padding: 0.4rem;
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-  cursor: pointer;
-  margin-right: 5px;
 }
 </style>
