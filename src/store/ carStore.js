@@ -32,10 +32,14 @@ export default {
     actions: {
       // eslint-disable-next-line
       async getVehicles({ commit }, Page = 1) {
-        const { data } = await Provider.get('/Vehicles', { Page });
+        try {
+          const { data } = await Provider.get('/Vehicles', { Page });
 
-        commit('setVehicles', data);
-        return Promise.resolve(data);
+          commit('setVehicles', data);
+          return Promise.resolve(data);
+        } catch (e) {
+          return Promise.reject(e);
+        }
       },
       // eslint-disable-next-line
       async getBrands({ commit }, _) {
@@ -43,18 +47,30 @@ export default {
           const { data } = await Provider.get('/Make');
 
           commit('setBrands', data);
-          return Promise.resolve({ ...data });
+          return Promise.resolve(data);
         } catch (e) {
           return Promise.reject(e);
         }
       },
       async getModels({ commit }, MakeID) {
-        const { data } = await Provider.get('/Model', { MakeID });
-        commit('setModels', data);
+        try {
+          const { data } = await Provider.get('/Model', { MakeID });
+          commit('setModels', data);
+
+          return Promise.resolve(data);
+        } catch (e) {
+          return Promise.reject(e);
+        }
       },
       async getVersionModels({ commit }, ModelID) {
-        const { data } = await Provider.get('/Version', { ModelID });
-        commit('setVersionModels', data);
+        try {
+          const { data } = await Provider.get('/Version', { ModelID });
+          commit('setVersionModels', data);
+
+          return Promise.resolve(data);
+        } catch (e) {
+          return Promise.reject(e);
+        }
       },
     },
   },
